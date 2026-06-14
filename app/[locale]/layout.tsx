@@ -9,6 +9,7 @@ import { NavLinks } from "@/components/NavLinks"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { Analytics } from "@vercel/analytics/next"
 import "../globals.css"
 
 const nunito = Nunito({ variable: "--font-sans", subsets: ["latin"], display: "swap" })
@@ -74,6 +75,7 @@ export default async function LocaleLayout({
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
