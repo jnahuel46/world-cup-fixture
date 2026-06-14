@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project overview
+
+Web app for tracking the FIFA World Cup 2026. Shows today's live match scores (polled every 30s from football-data.org), a full fixture calendar for the 72 group-stage matches, a top-scorers leaderboard, and a "My Country" section where users can follow all matches of their chosen team. Built for Argentine users — default language is Spanish, timezone is ART (UTC-3). Deployed to Vercel; API key goes in `.env.local`.
+
 @AGENTS.md
 @IDEA.md
 
@@ -40,11 +44,15 @@ app/
 api/
   live-scores/
     route.ts                  # GET → today's matches in ART, mock scores when no API key
+  scorers/
+    route.ts                  # GET → top 10 scorers from football-data.org, revalidate 300s
 data/
   fixture.json                # 72 group-stage matches, Groups A–L, June 11 – July 3
 components/
-  TodayMatchesCard.tsx        # client, polls /api/live-scores every 30s
+  TodayMatchesCard.tsx        # client, polls /api/live-scores every 30s, refresh button w/ 30s cooldown
   MatchCalendar.tsx           # client, shadcn Calendar + fixed-width match list panel
+  ScorersCard.tsx             # async server component, fetches /v4/competitions/WC/scorers, revalidate 300s
+  MyCountryCard.tsx           # client, country selector saved to localStorage, filters fixture matches
   FlagIcon.tsx                # SVG flags via country-flag-icons (GB_ENG / GB_SCT supported)
   NavLinks.tsx                # client, active pill state via usePathname
   LocaleSwitcher.tsx          # client, swaps locale preserving path
@@ -60,6 +68,7 @@ messages/
   en.json                     # English translations
 lib/
   types.ts                    # Match, LiveMatch, MatchStatus
+  team-names.ts               # EN_TO_ES map shared by both API routes (48 WC teams)
 proxy.ts                      # next-intl middleware (Next.js 16 renamed from middleware.ts)
 public/
   favicon.svg                 # soccer ball emoji SVG
@@ -76,4 +85,7 @@ Path alias `@/*` resolves to the project root.
 - **Flags**: `FlagIcon` component uses `country-flag-icons/react/3x2`. Country code map lives in `components/FlagIcon.tsx`. All 48 WC teams mapped; England = `GB_ENG`, Scotland = `GB_SCT`.
 - **i18n**: prefix-all-locales (`/es/…`, `/en/…`), default = `es`. Root layout (`app/layout.tsx`) is a passthrough. Locale layout wraps everything in `NextIntlClientProvider`.
 - **Calendar layout**: `MatchCalendar` uses CSS grid `grid-cols-[auto_320px]` so the match list panel stays fixed-width when the selected date changes.
+- **Scorers**: `ScorersCard` is an async Server Component that fetches directly from the football-data.org API (not via the route handler) with `revalidate = 300`. Returns `null` when no API key or empty response.
+- **My Country**: `MyCountryCard` is a Client Component. It renders `null` until mounted to avoid hydration mismatch. All 48 WC teams are listed alphabetically in Spanish. Country name from localStorage must match the Spanish names in `fixture.json`.
+- **EN→ES mapping**: `lib/team-names.ts` exports `EN_TO_ES` — the single source of truth for English→Spanish team name translation used by both API routes.
 - **shadcn/ui**: components are copied into `components/ui/` by the CLI — not installed as a package.

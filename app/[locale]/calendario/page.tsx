@@ -11,7 +11,7 @@ export default async function CalendarioPage({
   const t = await getTranslations({ locale, namespace: "calendar" })
 
   return (
-    <main className="w-full max-w-4xl mx-auto px-4 py-8">
+    <main className="w-full max-w-4xl mx-auto px-6 sm:px-10 pt-10 pb-20">
       <h1 className="text-2xl font-bold mb-8">{t("title")}</h1>
       <MatchCalendar matches={fixture.matches} />
     </main>

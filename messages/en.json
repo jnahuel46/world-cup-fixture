@@ -2,7 +2,8 @@
   "nav": {
     "title": "World Cup 2026",
     "today": "Today",
-    "calendar": "Schedule"
+    "calendar": "Schedule",
+    "myCountry": "My Country"
   },
   "todayCard": {
     "title": "Today's Matches",
@@ -19,6 +20,17 @@
     "title": "World Cup 2026 Schedule",
     "selectDate": "Select a date",
     "noMatches": "No matches on this day."
+  },
+  "scorers": {
+    "title": "Top Scorers"
+  },
+  "myCountry": {
+    "title": "My Country",
+    "change": "Change",
+    "prompt": "Choose your team to see all their matches.",
+    "selectPlaceholder": "Select a country…",
+    "matches": "matches",
+    "vsOpponent": "vs {opponent}"
   },
   "meta": {
     "title": "World Cup 2026",

@@ -63,7 +63,7 @@ export default async function LocaleLayout({
                   <span className="text-lg leading-none">⚽</span>
                   <span className="font-bold text-sm tracking-tight hidden sm:block">{t("title")}</span>
                 </Link>
-                <NavLinks today={t("today")} calendar={t("calendar")} />
+                <NavLinks today={t("today")} calendar={t("calendar")} myCountry={t("myCountry")} />
                 <div className="ml-auto flex items-center gap-2">
                   <ThemeToggle />
                   <LocaleSwitcher />

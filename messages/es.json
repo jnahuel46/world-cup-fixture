@@ -2,7 +2,8 @@
   "nav": {
     "title": "Mundial 2026",
     "today": "Hoy",
-    "calendar": "Calendario"
+    "calendar": "Calendario",
+    "myCountry": "Mi País"
   },
   "todayCard": {
     "title": "Partidos de hoy",
@@ -19,6 +20,17 @@
     "title": "Fixture Mundial 2026",
     "selectDate": "Seleccioná una fecha",
     "noMatches": "No hay partidos este día."
+  },
+  "scorers": {
+    "title": "Goleadores"
+  },
+  "myCountry": {
+    "title": "Mi País",
+    "change": "Cambiar",
+    "prompt": "Elegí tu selección para ver todos sus partidos.",
+    "selectPlaceholder": "Seleccioná un país…",
+    "matches": "partidos",
+    "vsOpponent": "vs {opponent}"
   },
   "meta": {
     "title": "Mundial 2026",

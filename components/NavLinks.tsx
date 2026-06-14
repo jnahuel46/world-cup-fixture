@@ -3,9 +3,9 @@
 import { usePathname, Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 
-type Props = { today: string; calendar: string }
+type Props = { today: string; calendar: string; myCountry: string }
 
-export function NavLinks({ today, calendar }: Props) {
+export function NavLinks({ today, calendar, myCountry }: Props) {
   const pathname = usePathname()
 
   const navLink = (href: string, label: string) => (
@@ -14,7 +14,7 @@ export function NavLinks({ today, calendar }: Props) {
       className={cn(
         "text-sm px-3 py-1.5 sm:px-4 rounded-full transition-all duration-150",
         pathname === href
-          ? "bg-emerald-100 text-emerald-800 font-medium shadow-sm"
+          ? "bg-emerald-100 text-emerald-800 font-medium shadow-sm dark:bg-emerald-900/60 dark:text-emerald-300"
           : "text-muted-foreground hover:text-foreground hover:bg-muted"
       )}
     >
@@ -26,6 +26,7 @@ export function NavLinks({ today, calendar }: Props) {
     <div className="flex items-center gap-1">
       {navLink("/", today)}
       {navLink("/calendario", calendar)}
+      {navLink("/mi-pais", myCountry)}
     </div>
   )
 }

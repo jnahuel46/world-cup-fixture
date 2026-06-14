@@ -44,6 +44,7 @@ export function MatchCalendar({ matches }: Props) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-[1fr_320px]">
+      <div className="isolate overflow-hidden rounded-lg">
       <Calendar
         mode="single"
         selected={selected}
@@ -56,6 +57,7 @@ export function MatchCalendar({ matches }: Props) {
         startMonth={new Date(2026, 5)}
         endMonth={new Date(2026, 6)}
       />
+      </div>
 
       <div className="w-full overflow-hidden min-h-[200px]">
         <h2 className="text-base font-semibold mb-3 capitalize">

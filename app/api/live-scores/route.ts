@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import fixture from "@/data/fixture.json"
+import { EN_TO_ES } from "@/lib/team-names"
 import type { LiveMatch, MatchStatus } from "@/lib/types"
 
 export const revalidate = 30
@@ -8,66 +9,6 @@ const ART = "America/Argentina/Buenos_Aires"
 
 function toARTDate(d: Date) {
   return d.toLocaleDateString("en-CA", { timeZone: ART })
-}
-
-// football-data.org returns English names — map to the Spanish names in fixture.json
-const EN_TO_ES: Record<string, string> = {
-  "Germany": "Alemania",
-  "Australia": "Australia",
-  "Curacao": "Curazao",
-  "Curaçao": "Curazao",
-  "Ivory Coast": "Costa de Marfil",
-  "Côte d'Ivoire": "Costa de Marfil",
-  "Netherlands": "Países Bajos",
-  "Japan": "Japón",
-  "Sweden": "Suecia",
-  "Tunisia": "Túnez",
-  "Mexico": "México",
-  "South Africa": "Sudáfrica",
-  "Czech Republic": "República Checa",
-  "Czechia": "República Checa",
-  "South Korea": "Corea del Sur",
-  "Korea Republic": "Corea del Sur",
-  "Canada": "Canadá",
-  "Bosnia and Herzegovina": "Bosnia-Herzegovina",
-  "Bosnia & Herzegovina": "Bosnia-Herzegovina",
-  "Qatar": "Catar",
-  "Switzerland": "Suiza",
-  "Brazil": "Brasil",
-  "Haiti": "Haití",
-  "Morocco": "Marruecos",
-  "Scotland": "Escocia",
-  "USA": "EE.UU.",
-  "United States": "EE.UU.",
-  "Paraguay": "Paraguay",
-  "Turkey": "Turquía",
-  "Türkiye": "Turquía",
-  "Belgium": "Bélgica",
-  "Egypt": "Egipto",
-  "Iran": "Irán",
-  "New Zealand": "Nueva Zelanda",
-  "Spain": "España",
-  "Saudi Arabia": "Arabia Saudita",
-  "Uruguay": "Uruguay",
-  "Cape Verde": "Cabo Verde",
-  "Cape Verde Islands": "Cabo Verde",
-  "France": "Francia",
-  "Iraq": "Irak",
-  "Norway": "Noruega",
-  "Senegal": "Senegal",
-  "Argentina": "Argentina",
-  "Algeria": "Argelia",
-  "Austria": "Austria",
-  "Jordan": "Jordania",
-  "Portugal": "Portugal",
-  "Colombia": "Colombia",
-  "DR Congo": "R.D. Congo",
-  "Congo DR": "R.D. Congo",
-  "Uzbekistan": "Uzbekistán",
-  "England": "Inglaterra",
-  "Croatia": "Croacia",
-  "Ghana": "Ghana",
-  "Panama": "Panamá",
 }
 
 function mapStatus(apiStatus: string): MatchStatus {
