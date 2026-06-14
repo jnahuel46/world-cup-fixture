@@ -1,15 +1,17 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Nunito } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { Link } from "@/i18n/navigation"
+import { NavLinks } from "@/components/NavLinks"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { ThemeProvider } from "@/components/ThemeProvider"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import "../globals.css"
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] })
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] })
+const nunito = Nunito({ variable: "--font-sans", subsets: ["latin"], display: "swap" })
 
 export async function generateMetadata({
   params,
@@ -18,7 +20,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "meta" })
-  return { title: t("title"), description: t("description") }
+  return {
+    title: t("title"),
+    description: t("description"),
+    icons: { icon: "/favicon.svg" },
+  }
 }
 
 export function generateStaticParams() {
@@ -44,34 +50,30 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${nunito.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <NextIntlClientProvider messages={messages}>
-          <header className="border-b">
-            <nav className="max-w-4xl mx-auto px-4 flex h-14 items-center gap-6">
-              <Link href="/" className="font-bold text-base">
-                {t("title")}
-              </Link>
-              <Link
-                href="/"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t("today")}
-              </Link>
-              <Link
-                href="/calendario"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {t("calendar")}
-              </Link>
-              <div className="ml-auto">
-                <LocaleSwitcher />
-              </div>
-            </nav>
-          </header>
-          {children}
-        </NextIntlClientProvider>
+      <body className="min-h-full flex flex-col bg-gradient-to-br from-emerald-50/60 via-background to-green-50/30 dark:from-emerald-950/20 dark:via-background dark:to-green-950/10">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextIntlClientProvider messages={messages}>
+            {/* Navbar */}
+            <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md">
+              <nav className="max-w-4xl mx-auto px-4 flex h-14 items-center gap-4">
+                <Link href="/" className="flex items-center gap-2 mr-2 shrink-0">
+                  <span className="text-lg leading-none">⚽</span>
+                  <span className="font-bold text-sm tracking-tight">{t("title")}</span>
+                </Link>
+                <NavLinks today={t("today")} calendar={t("calendar")} />
+                <div className="ml-auto flex items-center gap-2">
+                  <ThemeToggle />
+                  <LocaleSwitcher />
+                </div>
+              </nav>
+            </header>
+
+            {children}
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

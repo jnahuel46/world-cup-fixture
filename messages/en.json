@@ -10,7 +10,8 @@
     "noMatches": "No matches today.",
     "liveLabel": "LIVE",
     "finished": "Full Time",
-    "scheduled": "Scheduled"
+    "scheduled": "Scheduled",
+    "comingSoon": "Coming soon · Live results in development"
   },
   "calendar": {
     "title": "World Cup 2026 Schedule",

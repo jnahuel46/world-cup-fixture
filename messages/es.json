@@ -10,7 +10,8 @@
     "noMatches": "No hay partidos hoy.",
     "liveLabel": "EN VIVO",
     "finished": "Final",
-    "scheduled": "Programado"
+    "scheduled": "Programado",
+    "comingSoon": "Próximamente · Resultados en vivo en desarrollo"
   },
   "calendar": {
     "title": "Fixture Mundial 2026",

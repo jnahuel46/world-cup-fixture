@@ -12,7 +12,7 @@ export function LocaleSwitcher() {
     <Link
       href={pathname}
       locale={other}
-      className="text-xs font-medium border rounded px-2 py-1 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+      className="text-xs font-semibold text-muted-foreground hover:text-foreground bg-muted hover:bg-muted/80 rounded-full px-3 py-1.5 transition-colors"
     >
       {other.toUpperCase()}
     </Link>
