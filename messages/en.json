@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "title": "World Cup 2026",
+    "today": "Today",
+    "calendar": "Schedule"
+  },
+  "todayCard": {
+    "title": "Today's Matches",
+    "live": "Live",
+    "noMatches": "No matches today.",
+    "liveLabel": "LIVE",
+    "finished": "Full Time",
+    "scheduled": "Scheduled"
+  },
+  "calendar": {
+    "title": "World Cup 2026 Schedule",
+    "selectDate": "Select a date",
+    "noMatches": "No matches on this day."
+  },
+  "meta": {
+    "title": "World Cup 2026",
+    "description": "FIFA 2026 World Cup fixture and live results"
+  }
+}

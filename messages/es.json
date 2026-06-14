@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "title": "Mundial 2026",
+    "today": "Hoy",
+    "calendar": "Calendario"
+  },
+  "todayCard": {
+    "title": "Partidos de hoy",
+    "live": "En vivo",
+    "noMatches": "No hay partidos hoy.",
+    "liveLabel": "EN VIVO",
+    "finished": "Final",
+    "scheduled": "Programado"
+  },
+  "calendar": {
+    "title": "Fixture Mundial 2026",
+    "selectDate": "Seleccioná una fecha",
+    "noMatches": "No hay partidos este día."
+  },
+  "meta": {
+    "title": "Mundial 2026",
+    "description": "Fixture y resultados del Mundial FIFA 2026"
+  }
+}
