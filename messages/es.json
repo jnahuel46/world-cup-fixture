@@ -11,7 +11,9 @@
     "liveLabel": "EN VIVO",
     "finished": "Final",
     "scheduled": "Programado",
-    "comingSoon": "Próximamente · Resultados en vivo en desarrollo"
+    "refresh": "Actualizar",
+    "refreshIn": "en {s}s",
+    "telegramSoon": "Próximamente · Notificaciones por Telegram"
   },
   "calendar": {
     "title": "Fixture Mundial 2026",

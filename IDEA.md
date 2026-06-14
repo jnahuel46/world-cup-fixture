@@ -6,24 +6,32 @@
 Calendario con el fixture del Mundial (desde JSON) + card de "Partidos de hoy" con resultados en tiempo real.
 
 ### Stack
-- **Next.js 15** (App Router) en **Vercel**
-- **shadcn/ui** para componentes (Card, Calendar, Badge, Tabs)
-- **Tailwind CSS**
+- **Next.js 16** (App Router) en **Vercel**
+- **shadcn/ui** para componentes (Calendar, Skeleton; Card/Badge/Tabs via Tailwind)
+- **Tailwind CSS v4**
+- **next-intl v4** — español (default) e inglés, prefix-all-locales
+- **next-themes** — dark / light mode
+- **country-flag-icons** — banderas SVG de los 48 países
+- **Nunito** (Google Fonts) — fuente principal, bordes redondeados
 - Fixture inicial: JSON estático en `/data/fixture.json` (sin DB todavía)
-- Resultados en vivo: API pública (API-Football o football-data.org) consumida desde un Route Handler de Next.js
-- **Vercel Cron** (opcional incluso en MVP) o simplemente `fetch` con `revalidate` corto (ej. 60s) para actualizar resultados sin cron
+- Resultados en vivo: API pública (football-data.org) consumida desde un Route Handler de Next.js
+- `fetch` con `revalidate: 30` para cachear respuestas sin cron
 
 ### Estructura de datos (fixture.json)
+72 partidos de fase de grupos (Grupos A–L, 48 equipos reales, 11 jun – 3 jul 2026).
+Fechas en ISO 8601 con offset `-04:00` (ET); se muestran en ART (UTC-3).
+
 ```json
 {
+  "groups": { "A": ["México", "Sudáfrica", "República Checa", "Corea del Sur"], "...": [] },
   "matches": [
     {
       "id": "m1",
-      "date": "2026-06-15T18:00:00-04:00",
+      "date": "2026-06-11T19:00:00-04:00",
       "stage": "Grupo A",
-      "home": "Equipo A",
-      "away": "Equipo B",
-      "venue": "Estadio X"
+      "home": "México",
+      "away": "Sudáfrica",
+      "venue": "Estadio Azteca, Ciudad de México"
     }
   ]
 }
@@ -53,12 +61,18 @@ Calendario con el fixture del Mundial (desde JSON) + card de "Partidos de hoy" c
 - `skeleton` (loading states)
 
 ### Tareas
-- [ ] Setup Next.js 15 + Tailwind + shadcn
-- [ ] Crear `fixture.json` con partidos del Mundial 2026
-- [ ] Componente `TodayMatchesCard`
-- [ ] Componente `MatchCalendar`
-- [ ] Route handler `/api/live-scores` (elegir proveedor de API y obtener API key)
-- [ ] Polling de resultados en vivo
+- [x] Setup Next.js 16 + Tailwind v4 + shadcn/ui
+- [x] Crear `fixture.json` con los 72 partidos reales del Mundial 2026
+- [x] Componente `TodayMatchesCard` (polling 30s, banderas SVG, dark mode, banner "Próximamente")
+- [x] Componente `MatchCalendar` (dots en días con partidos, panel de ancho fijo, banderas)
+- [x] Route handler `/api/live-scores` con mock scores (proveedor: football-data.org)
+- [x] Polling de resultados en vivo (mock hasta obtener API key)
+- [x] i18n español / inglés con next-intl
+- [x] Dark / light mode con next-themes
+- [x] Banderas con country-flag-icons
+- [x] Fuente Nunito (suave, bordes redondeados)
+- [x] Favicon pelota de fútbol (SVG)
+- [ ] Obtener API key de football-data.org y conectar resultados reales
 - [ ] Deploy a Vercel
 
 ---
@@ -73,6 +87,6 @@ Calendario con el fixture del Mundial (desde JSON) + card de "Partidos de hoy" c
 
 ---
 
-## Decisiones pendientes
-- Proveedor de API de resultados en vivo (API-Football vs football-data.org — revisar costos/límites del free tier)
-- Zona horaria a usar para mostrar horarios (ART por defecto)
+## Decisiones tomadas
+- **Proveedor de API**: football-data.org (free tier, sin tarjeta de crédito). Env var: `FOOTBALL_DATA_API_KEY` en `.env.local`.
+- **Zona horaria**: ART (America/Argentina/Buenos_Aires, UTC-3) para mostrar horarios. Datetimes guardados con offset `-04:00` (ET).

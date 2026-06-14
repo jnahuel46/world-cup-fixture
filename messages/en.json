@@ -11,7 +11,9 @@
     "liveLabel": "LIVE",
     "finished": "Full Time",
     "scheduled": "Scheduled",
-    "comingSoon": "Coming soon · Live results in development"
+    "refresh": "Refresh",
+    "refreshIn": "in {s}s",
+    "telegramSoon": "Coming soon · Telegram notifications"
   },
   "calendar": {
     "title": "World Cup 2026 Schedule",

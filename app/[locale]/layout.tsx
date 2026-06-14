@@ -23,7 +23,7 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
-    icons: { icon: "/favicon.svg" },
+    icons: { icon: "/favicon.png" },
   }
 }
 
@@ -53,15 +53,15 @@ export default async function LocaleLayout({
       className={`${nunito.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-gradient-to-br from-emerald-50/60 via-background to-green-50/30 dark:from-emerald-950/20 dark:via-background dark:to-green-950/10">
+      <body className="min-h-full flex flex-col bg-gradient-to-br from-emerald-50/60 via-background to-green-50/30 dark:from-emerald-950/20 dark:via-background dark:to-green-950/10 overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextIntlClientProvider messages={messages}>
             {/* Navbar */}
             <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md">
-              <nav className="max-w-4xl mx-auto px-4 flex h-14 items-center gap-4">
-                <Link href="/" className="flex items-center gap-2 mr-2 shrink-0">
+              <nav className="max-w-4xl mx-auto px-4 flex h-14 items-center gap-2 sm:gap-4">
+                <Link href="/" className="flex items-center gap-2 shrink-0">
                   <span className="text-lg leading-none">⚽</span>
-                  <span className="font-bold text-sm tracking-tight">{t("title")}</span>
+                  <span className="font-bold text-sm tracking-tight hidden sm:block">{t("title")}</span>
                 </Link>
                 <NavLinks today={t("today")} calendar={t("calendar")} />
                 <div className="ml-auto flex items-center gap-2">

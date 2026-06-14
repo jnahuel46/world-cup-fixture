@@ -2,17 +2,27 @@
 
 import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
+import { RotateCw } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { FlagIcon } from "@/components/FlagIcon"
 import { cn } from "@/lib/utils"
 import type { LiveMatch, MatchStatus } from "@/lib/types"
 
 const ART = "America/Argentina/Buenos_Aires"
+const COOLDOWN_SECS = 30
 
 export function TodayMatchesCard() {
   const t = useTranslations("todayCard")
   const [matches, setMatches] = useState<LiveMatch[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const [cooldown, setCooldown] = useState(0)
+
+  // Countdown tick: chains 1-second timeouts while cooldown > 0
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const id = setTimeout(() => setCooldown((c) => c - 1), 1000)
+    return () => clearTimeout(id)
+  }, [cooldown])
 
   async function fetchMatches() {
     try {
@@ -24,9 +34,20 @@ export function TodayMatchesCard() {
     }
   }
 
+  function refresh() {
+    if (cooldown > 0) return
+    setCooldown(COOLDOWN_SECS)
+    fetchMatches()
+  }
+
+  // Auto-poll every 30s; also kick off the initial fetch + cooldown
   useEffect(() => {
     fetchMatches()
-    const id = setInterval(fetchMatches, 30_000)
+    setCooldown(COOLDOWN_SECS)
+    const id = setInterval(() => {
+      fetchMatches()
+      setCooldown(COOLDOWN_SECS)
+    }, COOLDOWN_SECS * 1000)
     return () => clearInterval(id)
   }, [])
 
@@ -53,12 +74,36 @@ export function TodayMatchesCard() {
             </h2>
             <p className="text-muted-foreground text-xs mt-0.5 capitalize">{today}</p>
           </div>
-          {hasLive && (
-            <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-[10px] font-bold px-3 py-1.5 rounded-full border border-green-200 dark:border-green-800">
-              <span className="size-1.5 rounded-full bg-green-500 animate-pulse" />
-              {t("live").toUpperCase()}
-            </span>
-          )}
+
+          <div className="flex items-center gap-2">
+            {hasLive && (
+              <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-[10px] font-bold px-3 py-1.5 rounded-full border border-green-200 dark:border-green-800">
+                <span className="size-1.5 rounded-full bg-green-500 animate-pulse" />
+                {t("live").toUpperCase()}
+              </span>
+            )}
+
+            {/* Refresh button */}
+            <button
+              onClick={refresh}
+              disabled={cooldown > 0}
+              title={cooldown > 0 ? t("refreshIn", { s: cooldown }) : t("refresh")}
+              className={cn(
+                "inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1.5 rounded-full border transition-colors",
+                cooldown > 0
+                  ? "border-border text-muted-foreground/50 cursor-not-allowed bg-muted/30"
+                  : "border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 bg-white/60 dark:bg-emerald-950/30 hover:bg-emerald-50 dark:hover:bg-emerald-900/40 cursor-pointer"
+              )}
+            >
+              <RotateCw
+                className={cn(
+                  "size-3",
+                  cooldown > 0 ? "text-muted-foreground/40" : "text-emerald-600 dark:text-emerald-400"
+                )}
+              />
+              {cooldown > 0 ? t("refreshIn", { s: cooldown }) : t("refresh")}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -75,11 +120,11 @@ export function TodayMatchesCard() {
         )}
       </div>
 
-      {/* Coming soon banner */}
-      <div className="flex items-center justify-center gap-2 bg-amber-50 dark:bg-amber-950/30 border-t border-amber-100 dark:border-amber-900/40 px-5 py-2.5">
-        <span className="text-amber-500 text-sm">🚧</span>
-        <span className="text-[11px] font-medium text-amber-700 dark:text-amber-400">
-          {t("comingSoon")}
+      {/* Telegram coming soon banner */}
+      <div className="flex items-center justify-center gap-2 bg-sky-50 dark:bg-sky-950/30 border-t border-sky-100 dark:border-sky-900/40 px-5 py-2.5">
+        <TelegramIcon className="size-3.5 text-sky-500 shrink-0" />
+        <span className="text-[11px] font-medium text-sky-700 dark:text-sky-400">
+          {t("telegramSoon")}
         </span>
       </div>
     </div>
@@ -106,10 +151,11 @@ function MatchRow({
     <div
       className={cn(
         "px-5 py-4 transition-colors",
-        isLive ? "bg-green-50/60 dark:bg-green-950/20 hover:bg-green-50 dark:hover:bg-green-950/30" : "hover:bg-muted/40"
+        isLive
+          ? "bg-green-50/60 dark:bg-green-950/20 hover:bg-green-50 dark:hover:bg-green-950/30"
+          : "hover:bg-muted/40"
       )}
     >
-      {/* Teams + center */}
       <div className="flex items-center gap-1">
         {/* Home */}
         <div className="flex-1 flex items-center justify-end gap-2 min-w-0">
@@ -127,7 +173,6 @@ function MatchRow({
               </span>
             </div>
           )}
-
           {isScheduled ? (
             <span className="text-sm font-semibold text-muted-foreground tabular-nums">{time}</span>
           ) : (
@@ -199,5 +244,13 @@ function MatchListSkeleton() {
         </div>
       ))}
     </>
+  )
+}
+
+function TelegramIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 13.667l-2.965-.924c-.644-.204-.657-.644.136-.953l11.57-4.461c.537-.194 1.006.131.983.892z"/>
+    </svg>
   )
 }

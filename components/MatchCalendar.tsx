@@ -43,7 +43,7 @@ export function MatchCalendar({ matches }: Props) {
     : []
 
   return (
-    <div className="grid grid-cols-1 gap-8 md:grid-cols-[auto_320px]">
+    <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-[1fr_320px]">
       <Calendar
         mode="single"
         selected={selected}
@@ -57,7 +57,7 @@ export function MatchCalendar({ matches }: Props) {
         endMonth={new Date(2026, 6)}
       />
 
-      <div className="overflow-hidden">
+      <div className="w-full overflow-hidden min-h-[200px]">
         <h2 className="text-base font-semibold mb-3 capitalize">
           {selected
             ? selected.toLocaleDateString("es-AR", {
@@ -79,14 +79,14 @@ export function MatchCalendar({ matches }: Props) {
                 timeZone: ART,
               })
               return (
-                <li key={m.id} className="rounded-lg border p-3">
-                  <div className="flex items-center gap-2">
+                <li key={m.id} className="rounded-lg border p-3 w-full min-w-0">
+                  <div className="flex items-center gap-2 w-full min-w-0">
                     <FlagIcon team={m.home} className="w-5 h-3.5 rounded-[2px] object-cover shrink-0" />
-                    <span className="font-medium text-sm truncate">{m.home}</span>
-                    <span className="text-sm text-muted-foreground tabular-nums shrink-0 mx-auto">
+                    <span className="font-medium text-sm truncate min-w-0 flex-1">{m.home}</span>
+                    <span className="text-sm text-muted-foreground tabular-nums shrink-0 px-1">
                       {time}
                     </span>
-                    <span className="font-medium text-sm truncate text-right">{m.away}</span>
+                    <span className="font-medium text-sm truncate text-right min-w-0 flex-1">{m.away}</span>
                     <FlagIcon team={m.away} className="w-5 h-3.5 rounded-[2px] object-cover shrink-0" />
                   </div>
                   <p className="text-xs text-muted-foreground mt-1 truncate">

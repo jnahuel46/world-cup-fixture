@@ -12,7 +12,7 @@ export function NavLinks({ today, calendar }: Props) {
     <Link
       href={href}
       className={cn(
-        "text-sm px-4 py-1.5 rounded-full transition-all duration-150",
+        "text-sm px-3 py-1.5 sm:px-4 rounded-full transition-all duration-150",
         pathname === href
           ? "bg-emerald-100 text-emerald-800 font-medium shadow-sm"
           : "text-muted-foreground hover:text-foreground hover:bg-muted"
