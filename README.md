@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Cup 2026 ⚽
 
-## Getting Started
+App para seguir el Mundial FIFA 2026 sin publicidad ni distracciones — solo resultados, fixture y goleadores.
 
-First, run the development server:
+🌐 **[world-cup-fixture.vercel.app](https://world-cup-fixture.vercel.app/es)**
+
+## Features
+
+- **Partidos de hoy** — resultados en vivo actualizados cada 30 segundos vía football-data.org
+- **Calendario** — los 72 partidos de la fase de grupos (Grupos A–L, 11 jun – 3 jul 2026)
+- **Goleadores** — top 10 del torneo, actualizado cada 5 minutos
+- **Mi País** — elegís tu selección y ves todos sus partidos de un vistazo
+- Banderas SVG para los 48 equipos, dark mode, español e inglés
+
+## Stack
+
+| | |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19 + Tailwind CSS v4 + shadcn/ui |
+| i18n | next-intl v4 (es / en) |
+| Temas | next-themes (dark / light) |
+| API | football-data.org (free tier) |
+| Deploy | Vercel |
+
+## Desarrollo local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Creá un archivo `.env.local` con tu API key de [football-data.org](https://www.football-data.org/client/register):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+FOOTBALL_DATA_API_KEY=tu_clave_aqui
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Sin la key la app funciona igual con datos simulados basados en el horario de cada partido.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev   # localhost:3000
+```
