@@ -5,10 +5,10 @@ import type { LiveMatch, MatchStatus } from "@/lib/types"
 
 export const revalidate = 30
 
-const ART = "America/Argentina/Buenos_Aires"
+const DEFAULT_TZ = "America/Argentina/Buenos_Aires"
 
-function toARTDate(d: Date) {
-  return d.toLocaleDateString("en-CA", { timeZone: ART })
+function toTzDate(d: Date, tz: string) {
+  return d.toLocaleDateString("en-CA", { timeZone: tz })
 }
 
 function mapStatus(apiStatus: string): MatchStatus {
@@ -24,19 +24,22 @@ function mapStatus(apiStatus: string): MatchStatus {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const tz = searchParams.get("tz") || DEFAULT_TZ
+
   const now = new Date()
-  const today = toARTDate(now)
+  const today = toTzDate(now, tz)
 
   const todayMatches = fixture.matches.filter(
-    (m) => toARTDate(new Date(m.date)) === today
+    (m) => toTzDate(new Date(m.date), tz) === today
   )
 
   const apiKey = process.env.FOOTBALL_DATA_API_KEY
 
   if (apiKey) {
     try {
-      // Use ART date (not UTC) as base — after midnight UTC, UTC date is already tomorrow
+      // Use local date (not UTC) as base — after midnight UTC, UTC date is already tomorrow
       const [artY, artMo, artD] = today.split("-").map(Number)
       const utcFrom = today
       const utcTo = new Date(Date.UTC(artY, artMo - 1, artD + 1)).toISOString().slice(0, 10)

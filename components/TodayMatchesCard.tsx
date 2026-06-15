@@ -1,18 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { RotateCw } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { FlagIcon } from "@/components/FlagIcon"
 import { cn } from "@/lib/utils"
+import { useTimezone } from "@/components/TimezoneProvider"
 import type { LiveMatch, MatchStatus } from "@/lib/types"
 
-const ART = "America/Argentina/Buenos_Aires"
 const COOLDOWN_SECS = 30
 
 export function TodayMatchesCard() {
   const t = useTranslations("todayCard")
+  const { timezone } = useTimezone()
   const [matches, setMatches] = useState<LiveMatch[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [cooldown, setCooldown] = useState(0)
@@ -24,9 +25,11 @@ export function TodayMatchesCard() {
     return () => clearTimeout(id)
   }, [cooldown])
 
-  async function fetchMatches() {
+  // Ref always points to the latest fetch function — interval never goes stale
+  const fetchRef = useRef(async () => {})
+  fetchRef.current = async () => {
     try {
-      const res = await fetch("/api/live-scores")
+      const res = await fetch(`/api/live-scores?tz=${encodeURIComponent(timezone)}`)
       const data = await res.json()
       setMatches(data.matches)
     } finally {
@@ -37,19 +40,14 @@ export function TodayMatchesCard() {
   function refresh() {
     if (cooldown > 0) return
     setCooldown(COOLDOWN_SECS)
-    fetchMatches()
+    fetchRef.current()
   }
 
-  // Auto-poll every 30s; also kick off the initial fetch + cooldown
+  // Fetch once on mount, then only on manual refresh
   useEffect(() => {
-    fetchMatches()
+    fetchRef.current()
     setCooldown(COOLDOWN_SECS)
-    const id = setInterval(() => {
-      fetchMatches()
-      setCooldown(COOLDOWN_SECS)
-    }, COOLDOWN_SECS * 1000)
-    return () => clearInterval(id)
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const hasLive = matches?.some((m) => m.status === "live")
 
@@ -57,7 +55,7 @@ export function TodayMatchesCard() {
     weekday: "long",
     day: "numeric",
     month: "long",
-    timeZone: ART,
+    timeZone: timezone,
   })
 
   return (
@@ -138,10 +136,11 @@ function MatchRow({
   match: LiveMatch
   t: ReturnType<typeof useTranslations<"todayCard">>
 }) {
+  const { timezone } = useTimezone()
   const time = new Date(match.date).toLocaleTimeString("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: ART,
+    timeZone: timezone,
   })
 
   const isLive = match.status === "live"
@@ -196,10 +195,14 @@ function MatchRow({
         <StatusChip status={match.status} t={t} />
         <span className="text-muted-foreground/50 text-xs">·</span>
         <span className="text-[11px] text-muted-foreground">{match.stage}</span>
-        <span className="text-muted-foreground/50 text-xs">·</span>
-        <span className="text-[11px] text-muted-foreground truncate max-w-[140px]">
-          {match.venue.split(",")[0]}
-        </span>
+        {match.venue && (
+          <>
+            <span className="text-muted-foreground/50 text-xs">·</span>
+            <span className="text-[11px] text-muted-foreground truncate max-w-[140px]">
+              {match.venue.split(",")[0]}
+            </span>
+          </>
+        )}
       </div>
     </div>
   )

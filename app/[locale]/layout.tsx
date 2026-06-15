@@ -9,6 +9,8 @@ import { NavLinks } from "@/components/NavLinks"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { TimezoneProvider } from "@/components/TimezoneProvider"
+import { TimezoneSelector } from "@/components/TimezoneSelector"
 import { Analytics } from "@vercel/analytics/next"
 import "../globals.css"
 
@@ -56,6 +58,7 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col bg-gradient-to-br from-emerald-50/60 via-background to-green-50/30 dark:from-emerald-950/20 dark:via-background dark:to-green-950/10 overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TimezoneProvider>
           <NextIntlClientProvider messages={messages}>
             {/* Navbar */}
             <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md">
@@ -64,8 +67,9 @@ export default async function LocaleLayout({
                   <span className="text-lg leading-none">⚽</span>
                   <span className="font-bold text-sm tracking-tight hidden sm:block">{t("title")}</span>
                 </Link>
-                <NavLinks today={t("today")} calendar={t("calendar")} myCountry={t("myCountry")} />
+                <NavLinks today={t("today")} calendar={t("calendar")} myCountry={t("myCountry")} groups={t("groups")} />
                 <div className="ml-auto flex items-center gap-2">
+                  <TimezoneSelector />
                   <ThemeToggle />
                   <LocaleSwitcher />
                 </div>
@@ -74,6 +78,7 @@ export default async function LocaleLayout({
 
             {children}
           </NextIntlClientProvider>
+          </TimezoneProvider>
         </ThemeProvider>
         <Analytics />
       </body>

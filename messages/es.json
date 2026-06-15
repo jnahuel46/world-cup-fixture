@@ -3,7 +3,8 @@
     "title": "Mundial 2026",
     "today": "Hoy",
     "calendar": "Calendario",
-    "myCountry": "Mi País"
+    "myCountry": "Mi País",
+    "groups": "Grupos"
   },
   "todayCard": {
     "title": "Partidos de hoy",
@@ -30,7 +31,38 @@
     "prompt": "Elegí tu selección para ver todos sus partidos.",
     "selectPlaceholder": "Seleccioná un país…",
     "matches": "partidos",
-    "vsOpponent": "vs {opponent}"
+    "vsOpponent": "vs {opponent}",
+    "exportIcal": "Exportar iCal",
+    "addToGcal": "Google Cal",
+    "infoTitle": "¿Cómo exportar?",
+    "infoIcal": "Exportar iCal descarga un .ics compatible con Apple Calendar, Google Calendar y Outlook.",
+    "infoGcalIcon": "El ícono 📅 en cada partido lo agrega directo a tu Google Calendar."
+  },
+  "timezone": {
+    "label": "Zona horaria",
+    "title": "Seleccioná tu zona horaria"
+  },
+  "export": {
+    "addToGcal": "Google Cal",
+    "exportDay": "Exportar día",
+    "infoTitle": "¿Cómo exportar?",
+    "infoIcal": "Exportar día descarga un archivo .ics que podés importar en Apple Calendar, Google Calendar u Outlook.",
+    "infoGcal": "Google Cal abre el partido directo en tu Google Calendar desde el navegador."
+  },
+  "groups": {
+    "title": "Fase de Grupos",
+    "pos": "Pos",
+    "team": "Equipo",
+    "played": "PJ",
+    "won": "G",
+    "drawn": "E",
+    "lost": "P",
+    "goalsFor": "GF",
+    "goalsAgainst": "GC",
+    "goalDiff": "DG",
+    "points": "Pts",
+    "qualifies": "Clasifica a octavos de final",
+    "noData": "Las posiciones se actualizarán cuando comiencen los partidos."
   },
   "meta": {
     "title": "Mundial 2026",

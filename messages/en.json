@@ -3,7 +3,8 @@
     "title": "World Cup 2026",
     "today": "Today",
     "calendar": "Schedule",
-    "myCountry": "My Country"
+    "myCountry": "My Country",
+    "groups": "Groups"
   },
   "todayCard": {
     "title": "Today's Matches",
@@ -30,7 +31,38 @@
     "prompt": "Choose your team to see all their matches.",
     "selectPlaceholder": "Select a country…",
     "matches": "matches",
-    "vsOpponent": "vs {opponent}"
+    "vsOpponent": "vs {opponent}",
+    "exportIcal": "Export iCal",
+    "addToGcal": "Google Cal",
+    "infoTitle": "How to export?",
+    "infoIcal": "Export iCal downloads an .ics file compatible with Apple Calendar, Google Calendar and Outlook.",
+    "infoGcalIcon": "The 📅 icon on each match adds it directly to your Google Calendar."
+  },
+  "timezone": {
+    "label": "Timezone",
+    "title": "Select your timezone"
+  },
+  "export": {
+    "addToGcal": "Google Cal",
+    "exportDay": "Export day",
+    "infoTitle": "How to export?",
+    "infoIcal": "Export day downloads an .ics file you can import into Apple Calendar, Google Calendar or Outlook.",
+    "infoGcal": "Google Cal opens the match directly in your Google Calendar from the browser."
+  },
+  "groups": {
+    "title": "Group Stage",
+    "pos": "Pos",
+    "team": "Team",
+    "played": "MP",
+    "won": "W",
+    "drawn": "D",
+    "lost": "L",
+    "goalsFor": "GF",
+    "goalsAgainst": "GA",
+    "goalDiff": "GD",
+    "points": "Pts",
+    "qualifies": "Qualifies to Round of 16",
+    "noData": "Standings will update once matches begin."
   },
   "meta": {
     "title": "World Cup 2026",

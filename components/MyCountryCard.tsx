@@ -4,9 +4,10 @@ import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import { FlagIcon } from "@/components/FlagIcon"
 import { cn } from "@/lib/utils"
+import { useTimezone } from "@/components/TimezoneProvider"
+import { downloadICS, googleCalendarUrl } from "@/lib/ics"
 import type { Match } from "@/lib/types"
 
-const ART = "America/Argentina/Buenos_Aires"
 const LS_KEY = "wc26_my_country"
 
 const ALL_TEAMS = [
@@ -20,21 +21,21 @@ const ALL_TEAMS = [
   "Uzbekistán", "Cabo Verde",
 ].sort((a, b) => a.localeCompare(b, "es"))
 
-function formatDate(dateStr: string) {
+function formatDate(dateStr: string, tz: string) {
   return new Date(dateStr).toLocaleDateString("es-AR", {
-    weekday: "short", day: "numeric", month: "short", timeZone: ART,
+    weekday: "short", day: "numeric", month: "short", timeZone: tz,
   })
 }
 
-function formatTime(dateStr: string) {
+function formatTime(dateStr: string, tz: string) {
   return new Date(dateStr).toLocaleTimeString("es-AR", {
-    hour: "2-digit", minute: "2-digit", timeZone: ART,
+    hour: "2-digit", minute: "2-digit", timeZone: tz,
   })
 }
 
-function matchStatus(dateStr: string): "past" | "today" | "upcoming" {
-  const matchDate = new Date(dateStr).toLocaleDateString("en-CA", { timeZone: ART })
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: ART })
+function matchStatus(dateStr: string, tz: string): "past" | "today" | "upcoming" {
+  const matchDate = new Date(dateStr).toLocaleDateString("en-CA", { timeZone: tz })
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: tz })
   if (matchDate < today) return "past"
   if (matchDate === today) return "today"
   return "upcoming"
@@ -42,6 +43,7 @@ function matchStatus(dateStr: string): "past" | "today" | "upcoming" {
 
 export function MyCountryCard({ matches }: { matches: Match[] }) {
   const t = useTranslations("myCountry")
+  const { timezone } = useTimezone()
   const [country, setCountry] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
 
@@ -76,12 +78,20 @@ export function MyCountryCard({ matches }: { matches: Match[] }) {
         <div className="flex items-center justify-between mt-1">
           <h2 className="text-foreground font-bold text-lg leading-tight">{t("title")}</h2>
           {country && (
-            <button
-              onClick={clearCountry}
-              className="text-[10px] text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {t("change")}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => downloadICS(countryMatches, `mundial-2026-${country}.ics`)}
+                className="text-[10px] font-semibold text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
+              >
+                {t("exportIcal")}
+              </button>
+              <button
+                onClick={clearCountry}
+                className="text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {t("change")}
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -105,6 +115,7 @@ export function MyCountryCard({ matches }: { matches: Match[] }) {
           </div>
         </div>
       ) : (
+        <>
         <div className="divide-y divide-border/50">
           {/* Country pill */}
           <div className="flex items-center gap-3 px-5 py-3 bg-sky-50/50 dark:bg-sky-950/20">
@@ -117,7 +128,7 @@ export function MyCountryCard({ matches }: { matches: Match[] }) {
 
           {/* Match list */}
           {countryMatches.map((m) => {
-            const status = matchStatus(m.date)
+            const status = matchStatus(m.date, timezone)
             const isHome = m.home === country
             const opponent = isHome ? m.away : m.home
 
@@ -134,17 +145,27 @@ export function MyCountryCard({ matches }: { matches: Match[] }) {
                   <FlagIcon team={opponent} className="w-5 h-3.5 rounded-[2px] object-cover shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-foreground truncate">
-                      {isHome ? t("vsOpponent", { opponent }) : t("vsOpponent", { opponent })}
+                      {t("vsOpponent", { opponent })}
                     </p>
                     <p className="text-[11px] text-muted-foreground truncate">
-                      {m.stage} · {m.venue.split(",")[0]}
+                      {m.stage}{m.venue ? ` · ${m.venue.split(",")[0]}` : ""}
                     </p>
                   </div>
                   {/* Date + time */}
                   <div className="text-right shrink-0">
-                    <p className="text-[11px] font-medium text-foreground capitalize">{formatDate(m.date)}</p>
-                    <p className="text-[11px] text-muted-foreground tabular-nums">{formatTime(m.date)}</p>
+                    <p className="text-[11px] font-medium text-foreground capitalize">{formatDate(m.date, timezone)}</p>
+                    <p className="text-[11px] text-muted-foreground tabular-nums">{formatTime(m.date, timezone)}</p>
                   </div>
+                  {/* Google Calendar link */}
+                  <a
+                    href={googleCalendarUrl(m)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={t("addToGcal")}
+                    className="shrink-0 text-[10px] font-semibold text-sky-500 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
+                  >
+                    📅
+                  </a>
                   {/* Status dot */}
                   {status === "today" && (
                     <span className="size-2 rounded-full bg-green-500 animate-pulse shrink-0" />
@@ -157,6 +178,26 @@ export function MyCountryCard({ matches }: { matches: Match[] }) {
             )
           })}
         </div>
+
+        {/* Export info tip */}
+        <div className="mx-4 mb-4 mt-3 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-100 dark:border-sky-900/40 px-3.5 py-3 space-y-2">
+          <p className="text-[11px] font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wide">
+            {t("infoTitle")}
+          </p>
+          <div className="flex gap-2">
+            <span className="text-base leading-none">📥</span>
+            <p className="text-[11px] text-sky-700/80 dark:text-sky-300/80 leading-relaxed">
+              <span className="font-semibold">{t("exportIcal")}</span> — {t("infoIcal")}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <span className="text-base leading-none">📅</span>
+            <p className="text-[11px] text-sky-700/80 dark:text-sky-300/80 leading-relaxed">
+              {t("infoGcalIcon")}
+            </p>
+          </div>
+        </div>
+        </>
       )}
     </div>
   )
