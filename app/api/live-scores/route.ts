@@ -36,11 +36,13 @@ export async function GET() {
 
   if (apiKey) {
     try {
-      const utcToday = now.toISOString().slice(0, 10)
-      const utcTomorrow = new Date(now.getTime() + 86_400_000).toISOString().slice(0, 10)
+      // Use ART date (not UTC) as base — after midnight UTC, UTC date is already tomorrow
+      const [artY, artMo, artD] = today.split("-").map(Number)
+      const utcFrom = today
+      const utcTo = new Date(Date.UTC(artY, artMo - 1, artD + 1)).toISOString().slice(0, 10)
 
       const res = await fetch(
-        `https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${utcToday}&dateTo=${utcTomorrow}`,
+        `https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${utcFrom}&dateTo=${utcTo}`,
         { headers: { "X-Auth-Token": apiKey }, next: { revalidate: 30 } }
       )
 
@@ -64,19 +66,13 @@ export async function GET() {
         }
       }
 
-      console.log("[live-scores] lookup keys:", Object.keys(lookup))
-      console.log("[live-scores] fixture keys:", todayMatches.map(m => `${m.home}|${m.away}`))
-
       const matches: LiveMatch[] = todayMatches.map((m) => {
-        const key = `${m.home}|${m.away}`
-        const entry = lookup[key]
+        const entry = lookup[`${m.home}|${m.away}`]
 
         if (!entry || entry.status === "scheduled") {
-          console.log(`[live-scores] "${key}" → ${entry ? "TIMED/scheduled" : "NOT FOUND"} → scheduled`)
           return { ...m, status: "scheduled" }
         }
 
-        console.log(`[live-scores] "${key}" → ${entry.status} ${entry.homeScore}-${entry.awayScore}`)
 
 
         return {
