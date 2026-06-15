@@ -24,21 +24,6 @@ function mapStatus(apiStatus: string): MatchStatus {
   }
 }
 
-// ── Fallback mock (used when no API key or API error) ──────────────────────
-function mockStatus(dateStr: string): MatchStatus {
-  const start = new Date(dateStr)
-  const now = new Date()
-  if (now < start) return "scheduled"
-  if (now < new Date(start.getTime() + 105 * 60 * 1000)) return "live"
-  return "finished"
-}
-
-function mockScores(id: string) {
-  const n = parseInt(id.replace("m", ""), 10)
-  return { homeScore: n % 3, awayScore: (n + 1) % 3 }
-}
-
-// ── Main handler ───────────────────────────────────────────────────────────
 export async function GET() {
   const now = new Date()
   const today = toARTDate(now)
@@ -51,23 +36,18 @@ export async function GET() {
 
   if (apiKey) {
     try {
-      // Query a 2-day UTC window to cover the full ART day (ART = UTC-3)
       const utcToday = now.toISOString().slice(0, 10)
       const utcTomorrow = new Date(now.getTime() + 86_400_000).toISOString().slice(0, 10)
 
       const res = await fetch(
         `https://api.football-data.org/v4/competitions/WC/matches?dateFrom=${utcToday}&dateTo=${utcTomorrow}`,
-        {
-          headers: { "X-Auth-Token": apiKey },
-          next: { revalidate: 30 },
-        }
+        { headers: { "X-Auth-Token": apiKey }, next: { revalidate: 30 } }
       )
 
       if (!res.ok) throw new Error(`API ${res.status}`)
 
       const data = await res.json()
 
-      // Build a lookup keyed by "HomeES|AwayES"
       type ApiEntry = { status: MatchStatus; homeScore: number; awayScore: number; minute?: number }
       const lookup: Record<string, ApiEntry> = {}
 
@@ -76,25 +56,28 @@ export async function GET() {
         const away = EN_TO_ES[am.awayTeam?.name] ?? am.awayTeam?.shortName ?? am.awayTeam?.name
         if (!home || !away) continue
 
-        const status = mapStatus(am.status)
-        const homeScore = am.score?.fullTime?.home ?? 0
-        const awayScore = am.score?.fullTime?.away ?? 0
-        const minute = am.minute ?? undefined
-
-        lookup[`${home}|${away}`] = { status, homeScore, awayScore, minute }
+        lookup[`${home}|${away}`] = {
+          status: mapStatus(am.status),
+          homeScore: am.score?.fullTime?.home ?? 0,
+          awayScore: am.score?.fullTime?.away ?? 0,
+          minute: am.minute ?? undefined,
+        }
       }
 
-      const matches: LiveMatch[] = todayMatches.map((m) => {
-        const entry = lookup[`${m.home}|${m.away}`]
+      console.log("[live-scores] lookup keys:", Object.keys(lookup))
+      console.log("[live-scores] fixture keys:", todayMatches.map(m => `${m.home}|${m.away}`))
 
-        if (!entry) {
-          // No match found in API response — fall back to time-based mock
-          const status = mockStatus(m.date)
-          if (status === "scheduled") return { ...m, status }
-          return { ...m, status, ...mockScores(m.id) }
+      const matches: LiveMatch[] = todayMatches.map((m) => {
+        const key = `${m.home}|${m.away}`
+        const entry = lookup[key]
+
+        if (!entry || entry.status === "scheduled") {
+          console.log(`[live-scores] "${key}" → ${entry ? "TIMED/scheduled" : "NOT FOUND"} → scheduled`)
+          return { ...m, status: "scheduled" }
         }
 
-        if (entry.status === "scheduled") return { ...m, status: "scheduled" }
+        console.log(`[live-scores] "${key}" → ${entry.status} ${entry.homeScore}-${entry.awayScore}`)
+
 
         return {
           ...m,
@@ -107,20 +90,11 @@ export async function GET() {
 
       return NextResponse.json({ matches })
     } catch (err) {
-      console.error("[live-scores] API error, falling back to mock:", err)
+      console.error("[live-scores] API error:", err)
     }
   }
 
-  // ── Mock fallback ──────────────────────────────────────────────────────
-  const matches: LiveMatch[] = todayMatches.map((m) => {
-    const status = mockStatus(m.date)
-    if (status === "scheduled") return { ...m, status }
-    const minute =
-      status === "live"
-        ? Math.min(Math.floor((Date.now() - new Date(m.date).getTime()) / 60000), 90)
-        : undefined
-    return { ...m, status, ...mockScores(m.id), ...(minute !== undefined ? { minute } : {}) }
-  })
-
+  // Sin API key: todos scheduled, sin scores inventados
+  const matches: LiveMatch[] = todayMatches.map((m) => ({ ...m, status: "scheduled" }))
   return NextResponse.json({ matches })
 }
