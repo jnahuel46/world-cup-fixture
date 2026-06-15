@@ -34,7 +34,7 @@ async function fetchStandings(): Promise<GroupStanding[]> {
       return (data.standings as ApiStanding[])
         .filter((s) => s.type === "TOTAL")
         .map((s) => ({
-          group: s.group.replace("GROUP_", ""),
+          group: s.group.replace(/^Group[_ ]?/i, ""),
           table: s.table.map((row) => ({
             position: row.position,
             team: EN_TO_ES[row.team.name] ?? row.team.shortName ?? row.team.name,
@@ -154,7 +154,7 @@ export async function StandingsCard() {
       </div>
 
       {/* All 12 groups */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {groups.map((group) => (
           <GroupCard key={group.group} group={group} labels={labels} />
         ))}

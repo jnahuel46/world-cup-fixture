@@ -6,11 +6,14 @@ App para seguir el Mundial FIFA 2026 sin publicidad ni distracciones — solo re
 
 ## Features
 
-- **Partidos de hoy** — resultados en vivo actualizados cada 30 segundos vía football-data.org
+- **Partidos de hoy** — resultados en vivo con refresh manual (cooldown 30s) vía football-data.org
 - **Calendario** — los 72 partidos de la fase de grupos (Grupos A–L, 11 jun – 3 jul 2026)
 - **Goleadores** — top 10 del torneo, actualizado cada 5 minutos
 - **Mi País** — elegís tu selección y ves todos sus partidos de un vistazo
-- Banderas SVG para los 48 equipos, dark mode, español e inglés
+- **Tabla de posiciones** — fase de grupos en tiempo real, los 12 grupos
+- **Selector de zona horaria** — ART, Madrid, CDMX, NYC, Londres y Los Ángeles
+- **Exportar calendario** — Google Calendar o descarga .ics por partido o selección completa
+- Menú hamburguesa en mobile, banderas SVG para los 48 equipos, dark mode, español e inglés
 
 ## Stack
 
