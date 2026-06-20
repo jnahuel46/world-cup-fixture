@@ -9,6 +9,7 @@ export const TIMEZONES = [
   { value: "America/New_York",               label: "Nueva York"   },
   { value: "America/Mexico_City",            label: "México"       },
   { value: "America/Los_Angeles",            label: "Los Ángeles"  },
+  { value: "America/Aruba",                  label: "Aruba"        },
 ] as const
 
 export const DEFAULT_TZ = "America/Argentina/Buenos_Aires"

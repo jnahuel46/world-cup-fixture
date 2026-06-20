@@ -56,8 +56,9 @@ export function MatchCalendar({ matches }: Props) {
           hasMatch:
             "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:size-1 after:rounded-full after:bg-green-500 relative",
         }}
-        startMonth={new Date(2026, 5)}
-        endMonth={new Date(2026, 6)}
+        startMonth={new Date(2026, 5, 1)}
+        endMonth={new Date(2026, 6, 31)}
+        fixedWeeks
       />
       </div>
 
