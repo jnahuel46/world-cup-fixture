@@ -5,9 +5,9 @@ import { usePathname, Link } from "@/i18n/navigation"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-type Props = { today: string; calendar: string; myCountry: string; groups: string }
+type Props = { today: string; calendar: string; myCountry: string; groups: string; bracket: string }
 
-export function NavLinks({ today, calendar, myCountry, groups }: Props) {
+export function NavLinks({ today, calendar, myCountry, groups, bracket }: Props) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
@@ -18,6 +18,7 @@ export function NavLinks({ today, calendar, myCountry, groups }: Props) {
     { href: "/",          label: today      },
     { href: "/calendario", label: calendar  },
     { href: "/grupos",    label: groups     },
+    { href: "/llaves",    label: bracket    },
     { href: "/mi-pais",   label: myCountry  },
   ]
 

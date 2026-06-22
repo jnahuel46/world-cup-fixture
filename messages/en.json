@@ -4,7 +4,8 @@
     "today": "Today",
     "calendar": "Schedule",
     "myCountry": "My Country",
-    "groups": "Groups"
+    "groups": "Groups",
+    "bracket": "Bracket"
   },
   "todayCard": {
     "title": "Today's Matches",
@@ -63,6 +64,24 @@
     "points": "Pts",
     "qualifies": "Qualifies to Round of 16",
     "noData": "Standings will update once matches begin."
+  },
+  "bracket": {
+    "title": "Projected Bracket",
+    "subtitle": "Round of 32 projection based on current group standings",
+    "first": "1st",
+    "second": "2nd",
+    "third": "3rd",
+    "groupOf": "Group {group}",
+    "tbd": "To be defined",
+    "projected": "Projected",
+    "sideA": "Side A",
+    "sideB": "Side B",
+    "liveNote": "Projection updated in real time based on current standings",
+    "notStartedNote": "Projection will update once group stage matches begin",
+    "note": "* Matchups based on official FIFA bracket. Positions are projected and may change.",
+    "legendWinner": "Group winners",
+    "legendRunnerup": "Group runners-up",
+    "legendThird": "Best third-placed"
   },
   "meta": {
     "title": "World Cup 2026",

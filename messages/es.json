@@ -4,7 +4,8 @@
     "today": "Hoy",
     "calendar": "Calendario",
     "myCountry": "Mi País",
-    "groups": "Grupos"
+    "groups": "Grupos",
+    "bracket": "Llaves"
   },
   "todayCard": {
     "title": "Partidos de hoy",
@@ -63,6 +64,24 @@
     "points": "Pts",
     "qualifies": "Clasifica a octavos de final",
     "noData": "Las posiciones se actualizarán cuando comiencen los partidos."
+  },
+  "bracket": {
+    "title": "Llaves Estimadas",
+    "subtitle": "Proyección de 16avos de final basada en posiciones actuales",
+    "first": "1°",
+    "second": "2°",
+    "third": "3°",
+    "groupOf": "Grupo {group}",
+    "tbd": "Por definir",
+    "projected": "Proyectado",
+    "sideA": "Lado A",
+    "sideB": "Lado B",
+    "liveNote": "Proyección actualizada en tiempo real según posiciones actuales",
+    "notStartedNote": "La proyección se actualizará cuando empiecen los partidos de grupos",
+    "note": "* Cruces según el bracket oficial de la FIFA. Las posiciones son proyectadas y pueden cambiar.",
+    "legendWinner": "Primeros de grupo",
+    "legendRunnerup": "Segundos de grupo",
+    "legendThird": "Mejores terceros"
   },
   "meta": {
     "title": "Mundial 2026",
