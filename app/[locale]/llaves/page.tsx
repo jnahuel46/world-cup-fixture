@@ -1,11 +1,11 @@
 import { Suspense } from "react"
-import { ProjectedBracketCard } from "@/components/ProjectedBracketCard"
+import { BracketTreeCard } from "@/components/BracketTreeCard"
 
 function Loading() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-6">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className="rounded-xl border border-border/60 bg-card h-28 animate-pulse" />
+    <div className="flex gap-12 mt-6 overflow-hidden">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="rounded-xl border border-border/60 bg-card h-28 w-[220px] shrink-0 animate-pulse" />
       ))}
     </div>
   )
@@ -13,9 +13,9 @@ function Loading() {
 
 export default async function LlavesPage() {
   return (
-    <main className="max-w-5xl mx-auto px-4 py-8">
+    <main className="max-w-6xl mx-auto px-4 py-8">
       <Suspense fallback={<Loading />}>
-        <ProjectedBracketCard />
+        <BracketTreeCard />
       </Suspense>
     </main>
   )

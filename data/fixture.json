@@ -649,6 +649,262 @@
       "home": "Argelia",
       "away": "Austria",
       "venue": ""
+    },
+    {
+      "id": "m73",
+      "date": "2026-06-28T19:00:00Z",
+      "stage": "16avos de final",
+      "home": "Sudáfrica",
+      "away": "Canadá",
+      "venue": "SoFi Stadium, Los Ángeles"
+    },
+    {
+      "id": "m74",
+      "date": "2026-06-29T17:00:00Z",
+      "stage": "16avos de final",
+      "home": "Brasil",
+      "away": "Japón",
+      "venue": "NRG Stadium, Houston"
+    },
+    {
+      "id": "m75",
+      "date": "2026-06-29T20:30:00Z",
+      "stage": "16avos de final",
+      "home": "Alemania",
+      "away": "Paraguay",
+      "venue": "Gillette Stadium, Boston"
+    },
+    {
+      "id": "m76",
+      "date": "2026-06-30T01:00:00Z",
+      "stage": "16avos de final",
+      "home": "Países Bajos",
+      "away": "Marruecos",
+      "venue": "Estadio BBVA, Monterrey"
+    },
+    {
+      "id": "m77",
+      "date": "2026-06-30T17:00:00Z",
+      "stage": "16avos de final",
+      "home": "Costa de Marfil",
+      "away": "Noruega",
+      "venue": "AT&T Stadium, Dallas"
+    },
+    {
+      "id": "m78",
+      "date": "2026-06-30T21:00:00Z",
+      "stage": "16avos de final",
+      "home": "Francia",
+      "away": "Suecia",
+      "venue": "MetLife Stadium, Nueva Jersey"
+    },
+    {
+      "id": "m79",
+      "date": "2026-07-01T01:00:00Z",
+      "stage": "16avos de final",
+      "home": "México",
+      "away": "Ecuador",
+      "venue": "Estadio Azteca, Ciudad de México"
+    },
+    {
+      "id": "m80",
+      "date": "2026-07-01T16:00:00Z",
+      "stage": "16avos de final",
+      "home": "Inglaterra",
+      "away": "R.D. Congo",
+      "venue": "Mercedes-Benz Stadium, Atlanta"
+    },
+    {
+      "id": "m81",
+      "date": "2026-07-01T20:00:00Z",
+      "stage": "16avos de final",
+      "home": "Bélgica",
+      "away": "Senegal",
+      "venue": "Lumen Field, Seattle"
+    },
+    {
+      "id": "m82",
+      "date": "2026-07-02T00:00:00Z",
+      "stage": "16avos de final",
+      "home": "EE.UU.",
+      "away": "Bosnia-Herzegovina",
+      "venue": "Levi's Stadium, Santa Clara"
+    },
+    {
+      "id": "m83",
+      "date": "2026-07-02T19:00:00Z",
+      "stage": "16avos de final",
+      "home": "España",
+      "away": "Austria",
+      "venue": "SoFi Stadium, Los Ángeles"
+    },
+    {
+      "id": "m84",
+      "date": "2026-07-02T23:00:00Z",
+      "stage": "16avos de final",
+      "home": "Portugal",
+      "away": "Croacia",
+      "venue": "BMO Field, Toronto"
+    },
+    {
+      "id": "m85",
+      "date": "2026-07-03T03:00:00Z",
+      "stage": "16avos de final",
+      "home": "Suiza",
+      "away": "Argelia",
+      "venue": "BC Place, Vancouver"
+    },
+    {
+      "id": "m86",
+      "date": "2026-07-03T18:00:00Z",
+      "stage": "16avos de final",
+      "home": "Australia",
+      "away": "Egipto",
+      "venue": "AT&T Stadium, Dallas"
+    },
+    {
+      "id": "m87",
+      "date": "2026-07-03T22:00:00Z",
+      "stage": "16avos de final",
+      "home": "Argentina",
+      "away": "Cabo Verde",
+      "venue": "Hard Rock Stadium, Miami"
+    },
+    {
+      "id": "m88",
+      "date": "2026-07-04T01:30:00Z",
+      "stage": "16avos de final",
+      "home": "Colombia",
+      "away": "Ghana",
+      "venue": "Arrowhead Stadium, Kansas City"
+    },
+    {
+      "id": "m89",
+      "date": "2026-07-04T17:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Canadá",
+      "away": "Marruecos",
+      "venue": "NRG Stadium, Houston"
+    },
+    {
+      "id": "m90",
+      "date": "2026-07-04T21:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Paraguay",
+      "away": "Francia",
+      "venue": "Lincoln Financial Field, Filadelfia"
+    },
+    {
+      "id": "m91",
+      "date": "2026-07-05T20:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Brasil",
+      "away": "Noruega",
+      "venue": "MetLife Stadium, Nueva Jersey"
+    },
+    {
+      "id": "m92",
+      "date": "2026-07-06T00:00:00Z",
+      "stage": "Octavos de final",
+      "home": "México",
+      "away": "Inglaterra",
+      "venue": ""
+    },
+    {
+      "id": "m93",
+      "date": "2026-07-06T19:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Portugal",
+      "away": "España",
+      "venue": ""
+    },
+    {
+      "id": "m94",
+      "date": "2026-07-07T00:00:00Z",
+      "stage": "Octavos de final",
+      "home": "EE.UU.",
+      "away": "Bélgica",
+      "venue": ""
+    },
+    {
+      "id": "m95",
+      "date": "2026-07-07T16:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Argentina",
+      "away": "Egipto",
+      "venue": ""
+    },
+    {
+      "id": "m96",
+      "date": "2026-07-07T20:00:00Z",
+      "stage": "Octavos de final",
+      "home": "Suiza",
+      "away": "Colombia",
+      "venue": "BC Place, Vancouver"
+    },
+    {
+      "id": "m97",
+      "date": "2026-07-09T20:00:00Z",
+      "stage": "Cuartos de final",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": ""
+    },
+    {
+      "id": "m98",
+      "date": "2026-07-10T19:00:00Z",
+      "stage": "Cuartos de final",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": ""
+    },
+    {
+      "id": "m99",
+      "date": "2026-07-11T21:00:00Z",
+      "stage": "Cuartos de final",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": ""
+    },
+    {
+      "id": "m100",
+      "date": "2026-07-12T01:00:00Z",
+      "stage": "Cuartos de final",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": ""
+    },
+    {
+      "id": "m101",
+      "date": "2026-07-14T19:00:00Z",
+      "stage": "Semifinal",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": "AT&T Stadium, Dallas"
+    },
+    {
+      "id": "m102",
+      "date": "2026-07-15T19:00:00Z",
+      "stage": "Semifinal",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": "Mercedes-Benz Stadium, Atlanta"
+    },
+    {
+      "id": "m103",
+      "date": "2026-07-18T21:00:00Z",
+      "stage": "Tercer puesto",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": ""
+    },
+    {
+      "id": "m104",
+      "date": "2026-07-19T19:00:00Z",
+      "stage": "Final",
+      "home": "Por definir",
+      "away": "Por definir",
+      "venue": "MetLife Stadium, Nueva Jersey"
     }
   ]
 }

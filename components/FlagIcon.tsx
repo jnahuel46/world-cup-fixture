@@ -18,6 +18,7 @@ const CODES: Record<string, string> = {
   "Costa de Marfil":     "CI",
   "Croacia":             "HR",
   "Curazao":             "CW",
+  "Colombia":            "CO",
   "Ecuador":             "EC",
   "Egipto":              "EG",
   "Escocia":             "GB_SCT",

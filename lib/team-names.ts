@@ -55,4 +55,5 @@ export const EN_TO_ES: Record<string, string> = {
   "Croatia": "Croacia",
   "Ghana": "Ghana",
   "Panama": "Panamá",
+  "Ecuador": "Ecuador",
 }
