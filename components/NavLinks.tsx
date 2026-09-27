@@ -5,22 +5,19 @@ import { usePathname, Link } from "@/i18n/navigation"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-type Props = { today: string; calendar: string; myCountry: string; groups: string; bracket: string }
+type Props = { links: { href: string; label: string }[] }
 
-export function NavLinks({ today, calendar, myCountry, groups, bracket }: Props) {
+// "/" only matches itself; other links stay active on their sub-routes (e.g. /mundial-2026/grupos)
+function isActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)
+}
+
+export function NavLinks({ links }: Props) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
   // Close on navigation
   useEffect(() => setOpen(false), [pathname])
-
-  const links = [
-    { href: "/",          label: today      },
-    { href: "/calendario", label: calendar  },
-    { href: "/grupos",    label: groups     },
-    { href: "/llaves",    label: bracket    },
-    { href: "/mi-pais",   label: myCountry  },
-  ]
 
   return (
     <>
@@ -30,10 +27,10 @@ export function NavLinks({ today, calendar, myCountry, groups, bracket }: Props)
           <Link
             key={href}
             href={href}
-            aria-current={pathname === href ? "page" : undefined}
+            aria-current={isActive(pathname, href) ? "page" : undefined}
             className={cn(
               "text-sm px-3 py-1.5 sm:px-4 rounded-full transition-all duration-150",
-              pathname === href
+              isActive(pathname, href)
                 ? "bg-emerald-100 text-emerald-800 font-medium shadow-sm dark:bg-emerald-900/60 dark:text-emerald-300"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted"
             )}
@@ -71,10 +68,10 @@ export function NavLinks({ today, calendar, myCountry, groups, bracket }: Props)
               <Link
                 key={href}
                 href={href}
-                aria-current={pathname === href ? "page" : undefined}
+                aria-current={isActive(pathname, href) ? "page" : undefined}
                 className={cn(
                   "text-sm font-medium px-4 py-3 rounded-xl transition-colors",
-                  pathname === href
+                  isActive(pathname, href)
                     ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300"
                     : "text-foreground hover:bg-muted"
                 )}
