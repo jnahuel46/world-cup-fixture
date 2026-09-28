@@ -18,7 +18,9 @@ The original World Cup app lives on as an archive under `/mundial-2026/*`. Built
 pnpm dev        # start dev server (localhost:3000)
 pnpm build      # production build
 pnpm lint       # eslint (eslint v9 flat config)
-pnpm db:push    # apply lib/db/schema.ts to the Neon DB (reads DATABASE_URL from .env.local)
+pnpm db:generate  # create a SQL migration in drizzle/ from lib/db/schema.ts changes
+pnpm db:migrate   # apply pending migrations to Neon (reads DATABASE_URL from .env.local — shared with production)
+pnpm db:push    # apply schema directly without a migration file (prototyping only)
 pnpm db:studio  # browse the DB
 ```
 
