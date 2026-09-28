@@ -1,11 +1,14 @@
 {
   "nav": {
-    "title": "Mundial 2026",
+    "title": "Fixture",
     "today": "Hoy",
     "calendar": "Calendario",
     "myCountry": "Mi País",
     "groups": "Grupos",
-    "bracket": "Llaves"
+    "bracket": "Llaves",
+    "home": "Inicio",
+    "dashboard": "Mi dashboard",
+    "worldCup": "Mundial 2026"
   },
   "todayCard": {
     "title": "Partidos de hoy",
@@ -77,7 +80,76 @@
     "note": "* Los cruces se completan a medida que se confirman los resultados de la ronda anterior."
   },
   "meta": {
-    "title": "Mundial 2026",
-    "description": "Fixture y resultados del Mundial FIFA 2026"
+    "title": "Fixture · Resultados y calendario deportivo",
+    "description": "Champions League, Fórmula 1 y más: resultados en vivo, calendario y tablas en un solo lugar."
+  },
+  "home": {
+    "title": "Hoy en el deporte",
+    "subtitle": "Champions League y Fórmula 1: resultados, próximas fechas y tablas.",
+    "customizeCta": "Armá tu dashboard",
+    "goToDashboard": "Ir a mi dashboard"
+  },
+  "competitions": {
+    "ucl": "UEFA Champions League",
+    "laliga": "LaLiga",
+    "f1": "Fórmula 1"
+  },
+  "sports": {
+    "football": "Fútbol",
+    "motorsport": "Automovilismo",
+    "live": "En vivo",
+    "matches": "Partidos",
+    "table": "Tabla",
+    "upcoming": "Próximos",
+    "results": "Resultados",
+    "noData": "No se pudieron cargar los datos. Probá de nuevo en un rato.",
+    "noApiKey": "Falta configurar FOOTBALL_DATA_API_KEY.",
+    "noUpcoming": "No hay partidos programados.",
+    "noResults": "Todavía no hay resultados.",
+    "team": "Equipo",
+    "played": "PJ",
+    "goalDiff": "DG",
+    "points": "Pts",
+    "f1": {
+      "season": "Temporada {season}",
+      "nextRace": "Próxima",
+      "lastRace": "Último GP",
+      "championship": "Campeonato",
+      "round": "Ronda {round} de {total}",
+      "schedule": "Horarios",
+      "seasonOver": "La temporada terminó.",
+      "wins": "{count, plural, one {# victoria} other {# victorias}}",
+      "sessions": {
+        "fp1": "Práctica 1",
+        "fp2": "Práctica 2",
+        "fp3": "Práctica 3",
+        "sprintQualy": "Clasificación sprint",
+        "sprint": "Sprint",
+        "qualy": "Clasificación",
+        "race": "Carrera"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Mi dashboard",
+    "greeting": "Hola, {name}",
+    "subtitle": "Tus deportes y competencias, en el orden que elegiste.",
+    "customize": "Personalizar",
+    "hint": "Elegí qué competencias ver y ordenalas.",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "moveUp": "Subir",
+    "moveDown": "Bajar",
+    "empty": "No elegiste ninguna competencia. Tocá “Personalizar” para agregar.",
+    "noDb": "La base de datos no está configurada: no se pueden guardar cambios.",
+    "error": "No se pudo guardar. Probá de nuevo."
+  },
+  "auth": {
+    "title": "Iniciar sesión",
+    "subtitle": "Guardá tus deportes favoritos y armá tu propio dashboard.",
+    "google": "Continuar con Google",
+    "login": "Ingresar",
+    "logout": "Cerrar sesión",
+    "notConfigured": "El inicio de sesión todavía no está configurado."
   }
 }

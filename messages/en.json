@@ -1,11 +1,14 @@
 {
   "nav": {
-    "title": "World Cup 2026",
+    "title": "Fixture",
     "today": "Today",
     "calendar": "Schedule",
     "myCountry": "My Country",
     "groups": "Groups",
-    "bracket": "Bracket"
+    "bracket": "Bracket",
+    "home": "Home",
+    "dashboard": "My dashboard",
+    "worldCup": "World Cup 2026"
   },
   "todayCard": {
     "title": "Today's Matches",
@@ -77,7 +80,76 @@
     "note": "* Matchups fill in as the previous round's results are confirmed."
   },
   "meta": {
-    "title": "World Cup 2026",
-    "description": "FIFA 2026 World Cup fixture and live results"
+    "title": "Fixture · Sports scores and schedules",
+    "description": "Champions League, Formula 1 and more: live scores, schedules and standings in one place."
+  },
+  "home": {
+    "title": "Today in sports",
+    "subtitle": "Champions League and Formula 1: results, upcoming fixtures and standings.",
+    "customizeCta": "Build your dashboard",
+    "goToDashboard": "Go to my dashboard"
+  },
+  "competitions": {
+    "ucl": "UEFA Champions League",
+    "laliga": "LaLiga",
+    "f1": "Formula 1"
+  },
+  "sports": {
+    "football": "Football",
+    "motorsport": "Motorsport",
+    "live": "Live",
+    "matches": "Matches",
+    "table": "Table",
+    "upcoming": "Upcoming",
+    "results": "Results",
+    "noData": "Couldn't load data. Try again in a bit.",
+    "noApiKey": "FOOTBALL_DATA_API_KEY is not configured.",
+    "noUpcoming": "No scheduled matches.",
+    "noResults": "No results yet.",
+    "team": "Team",
+    "played": "P",
+    "goalDiff": "GD",
+    "points": "Pts",
+    "f1": {
+      "season": "{season} season",
+      "nextRace": "Next",
+      "lastRace": "Last GP",
+      "championship": "Championship",
+      "round": "Round {round} of {total}",
+      "schedule": "Schedule",
+      "seasonOver": "The season is over.",
+      "wins": "{count, plural, one {# win} other {# wins}}",
+      "sessions": {
+        "fp1": "Practice 1",
+        "fp2": "Practice 2",
+        "fp3": "Practice 3",
+        "sprintQualy": "Sprint qualifying",
+        "sprint": "Sprint",
+        "qualy": "Qualifying",
+        "race": "Race"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "My dashboard",
+    "greeting": "Hi, {name}",
+    "subtitle": "Your sports and competitions, in the order you chose.",
+    "customize": "Customize",
+    "hint": "Pick which competitions to show and reorder them.",
+    "save": "Save",
+    "saving": "Saving…",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "empty": "You haven't picked any competitions. Tap “Customize” to add some.",
+    "noDb": "The database isn't configured: changes can't be saved.",
+    "error": "Couldn't save. Try again."
+  },
+  "auth": {
+    "title": "Sign in",
+    "subtitle": "Save your favorite sports and build your own dashboard.",
+    "google": "Continue with Google",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "notConfigured": "Sign-in isn't configured yet."
   }
 }

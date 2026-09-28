@@ -4,7 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Web app for tracking the FIFA World Cup 2026. Shows today's live match scores (polled every 30s from football-data.org), a full fixture calendar for the 72 group-stage matches, a top-scorers leaderboard, and a "My Country" section where users can follow all matches of their chosen team. Built for Argentine users — default language is Spanish, timezone is ART (UTC-3). Deployed to Vercel; API key goes in `.env.local`.
+Multi-sport scores & fixtures dashboard (started as a FIFA World Cup 2026 app). Two modes:
+- **Public** (`/`): no login, shows the default competitions (Champions League + Formula 1).
+- **Logged in** (`/dashboard`): Google login via Auth.js; users pick and order their competitions, saved in Neon Postgres.
+The original World Cup app lives on as an archive under `/mundial-2026/*`. Built for Argentine users — default language is Spanish, timezone is ART (UTC-3). Deployed to Vercel; env vars documented in `.env.example`.
 
 @AGENTS.md
 @IDEA.md
@@ -15,6 +18,10 @@ Web app for tracking the FIFA World Cup 2026. Shows today's live match scores (p
 pnpm dev        # start dev server (localhost:3000)
 pnpm build      # production build
 pnpm lint       # eslint (eslint v9 flat config)
+pnpm db:generate  # create a SQL migration in drizzle/ from lib/db/schema.ts changes
+pnpm db:migrate   # apply pending migrations to Neon (reads DATABASE_URL from .env.local — shared with production)
+pnpm db:push    # apply schema directly without a migration file (prototyping only)
+pnpm db:studio  # browse the DB
 ```
 
 No test runner is configured yet.
@@ -28,6 +35,8 @@ No test runner is configured yet.
 | Tailwind | v4 | `@import "tailwindcss"` replaces the v3 directives; `@theme inline` block for CSS vars; no `tailwind.config.*` file |
 | next-intl | v4 | `defineRouting`, `createNavigation`, `getRequestConfig`; middleware renamed to `proxy.ts` in Next.js 16 |
 | next-themes | — | `ThemeProvider` wraps the locale layout; `attribute="class"` triggers `.dark` on `<html>` |
+| next-auth (Auth.js) | v5 beta | `auth.ts` at root; JWT sessions + Drizzle adapter; use `getSession()` (null when AUTH_SECRET is missing) instead of `auth()` |
+| drizzle-orm | 0.45 | `neon-http` driver; `db` is `null` without DATABASE_URL |
 | react-day-picker | v10 | Breaking: `fromDate`/`toDate` → `startMonth`/`endMonth`; `table` key removed from `ClassNames` |
 
 ## Project structure
@@ -76,7 +85,16 @@ public/
 
 Path alias `@/*` resolves to the project root.
 
-## Architecture notes
+## Multi-sport architecture
+
+- `lib/sports/catalog.ts` — registry of competitions (`ucl`, `laliga`, `f1`) and `DEFAULT_COMPETITIONS`. Display names live in `messages/*.json` under `competitions`.
+- Providers: `lib/sports/football.ts` (football-data.org, one whole-season request per competition, revalidate 60s) and `lib/sports/f1.ts` (Jolpica/Ergast API, no key).
+- Cards: `components/sports/FootballCard.tsx`, `F1Card.tsx` (async Server Components), rendered by `Dashboard.tsx` inside per-card `Suspense`. `AutoRefresh` calls `router.refresh()` every 60s while a match is live. `LocalTime` formats dates in the user's selected timezone.
+- Adding a competition: catalog entry → provider → card (wire it in `Dashboard.tsx`) → translation.
+- Auth: `auth.ts` (Google provider), route `app/api/auth/[...nextauth]`, pages `app/[locale]/login` and `app/[locale]/dashboard` (server-side redirect when logged out). Preferences: `lib/preferences.ts` + server action `app/[locale]/dashboard/actions.ts`; table `user_preferences` in `lib/db/schema.ts`.
+- Server Components can't call `Date.now()` during render (react-hooks/purity lint) — compute time-dependent flags in `lib/sports/*`.
+
+## Architecture notes (World Cup archive, `/mundial-2026`)
 
 - **Data flow**: `data/fixture.json` is the source of truth (static, 72 matches). The `/api/live-scores` Route Handler filters today's matches by ART date, then either calls the real API (when `FOOTBALL_DATA_API_KEY` is set in `.env.local`) or returns mock statuses derived from the current time vs match start + 105 min.
 - **Live polling**: `TodayMatchesCard` uses `setInterval(fetch, 30_000)`. The route has `export const revalidate = 30`.

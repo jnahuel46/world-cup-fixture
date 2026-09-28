@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/components/ThemeProvider"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { TimezoneProvider } from "@/components/TimezoneProvider"
 import { TimezoneSelector } from "@/components/TimezoneSelector"
+import { UserMenu } from "@/components/auth/UserMenu"
 import { Analytics } from "@vercel/analytics/next"
 import "../globals.css"
 
@@ -62,16 +63,23 @@ export default async function LocaleLayout({
           <NextIntlClientProvider messages={messages}>
             {/* Navbar */}
             <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-md">
-              <nav className="max-w-4xl mx-auto px-4 flex h-14 items-center gap-2 sm:gap-4">
+              <nav className="max-w-5xl mx-auto px-4 flex h-14 items-center gap-2 sm:gap-4">
                 <Link href="/" className="flex items-center gap-2 shrink-0">
-                  <span className="text-lg leading-none">⚽</span>
+                  <span className="text-lg leading-none">🏆</span>
                   <span className="font-bold text-sm tracking-tight hidden sm:block">{t("title")}</span>
                 </Link>
-                <NavLinks today={t("today")} calendar={t("calendar")} myCountry={t("myCountry")} groups={t("groups")} bracket={t("bracket")} />
+                <NavLinks
+                  links={[
+                    { href: "/", label: t("home") },
+                    { href: "/dashboard", label: t("dashboard") },
+                    { href: "/mundial-2026", label: t("worldCup") },
+                  ]}
+                />
                 <div className="ml-auto flex items-center gap-2">
                   <TimezoneSelector />
                   <ThemeToggle />
                   <LocaleSwitcher />
+                  <UserMenu locale={locale} />
                 </div>
               </nav>
             </header>
